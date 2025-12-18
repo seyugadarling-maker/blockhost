@@ -52,9 +52,9 @@ export const register = async (req, res) => {
     // Generate JWT token
     const token = generateToken(user._id, user.email, user.role)
 
-    // Send Telegram notification (non-blocking)
-    sendTelegramNotification(username, email, user.createdAt).catch((err) => {
-      console.error("Telegram notification failed:", err.message)
+    sendTelegramNotification(username, email, user._id.toString()).catch((err) => {
+      // Errors are already handled in telegram.js, this is just extra safety
+      console.error("Telegram notification error:", err.message)
     })
 
     // Return success response
